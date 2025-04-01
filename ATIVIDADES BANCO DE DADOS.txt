@@ -1,0 +1,58 @@
+1. SELECT * FROM Categories;
+
+2. SELECT ProductID, ProductName FROM Products;
+
+3. SELECT ProductID, ProductName FROM Products ORDER BY ProductName ASC;
+
+4. SELECT ProductID, ProductName FROM Products ORDER BY Price DESC;
+
+5. SELECT ProductID, ProductName FROM Products WHERE Price > 50 ORDER BY Price DESC;
+
+6. SELECT ProductID, ProductName FROM Products WHERE Price BETWEEN 50 AND 200 ORDER BY Price ASC;
+
+7. SELECT ProductID, ProductName, CategoryID FROM Products WHERE CategoryID IN (2, 4, 6);
+
+8. SELECT ProductID, ProductName, CategoryID FROM Products WHERE CategoryID = 5;
+
+9. SELECT ProductID, ProductName, CategoryID FROM Products WHERE ProductName LIKE '%TOFU%';
+
+10. SELECT ProductID, ProductName, CategoryID FROM Products WHERE ProductName LIKE 'C%';
+
+12. SELECT MAX(ProductID) FROM Products;
+
+13. SELECT ProductName, Price FROM Products ORDER BY Price DESC;
+
+14. SELECT MIN(Price) AS MinPrice, MAX(Price) AS MaxPrice, AVG(Price) AS AvgPrice FROM Products WHERE CategoryID = 5;
+
+15. SELECT MIN(Price) AS MinPrice, MAX(Price) AS MaxPrice, AVG(Price) AS AvgPrice FROM Products;
+
+16. SELECT CategoryID, MIN(Price) AS MinPrice, MAX(Price) AS MaxPrice, AVG(Price) AS AvgPrice FROM Products GROUP BY CategoryID;
+
+17. SELECT CategoryID, COUNT(*) AS ProductCount FROM Products GROUP BY CategoryID;
+
+18. SELECT OrderID, COUNT(*) AS ProductCount FROM OrderDetails GROUP BY OrderID;
+
+19. SELECT SupplierID, CategoryID, COUNT(*) AS ProductCount FROM Products GROUP BY SupplierID, CategoryID;
+
+20. SELECT SupplierID FROM Products GROUP BY SupplierID HAVING COUNT(*) > 3;
+
+21. SELECT (SELECT ProductName FROM Products ORDER BY Price DESC LIMIT 1) AS MostExpensiveProduct, 
+            (SELECT ProductName FROM Products ORDER BY Price ASC LIMIT 1) AS CheapestProduct;
+
+22. SELECT ProductID, ProductName FROM Products WHERE CategoryID = (SELECT CategoryID FROM Categories WHERE CategoryName = 'Pescados');
+
+SELECT ProductID, ProductName FROM Products WHERE CategoryID != (SELECT CategoryID FROM Categories WHERE CategoryName = 'Pescados');
+
+23. SELECT OrderID, CustomerID, OrderDate FROM Orders WHERE CustomerID IN (SELECT CustomerID FROM Customers WHERE Country = 'BRASIL');
+
+24. SELECT ProductName, Price FROM Products WHERE ProductID IN (SELECT ProductID FROM OrderDetails WHERE OrderID IN (SELECT OrderID FROM Orders WHERE ShipperID = (SELECT ShipperID FROM Shippers WHERE ShipperName = 'BRASIL'))) ORDER BY Price DESC LIMIT 1;
+
+25. SELECT OrderID, SUM(Quantity), SUM(Quantity * Price) 
+    FROM OrderDetails 
+    JOIN Products ON OrderDetails.ProductID = Products.ProductID
+    GROUP BY OrderID;
+
+26. SELECT c.CategoryID, c.CategoryName, COUNT(p.ProductID) 
+    FROM Categories c 
+    LEFT JOIN Products p ON c.CategoryID = p.CategoryID 
+    GROUP BY c.CategoryID, c.CategoryName;
